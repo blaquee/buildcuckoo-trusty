@@ -42,17 +42,17 @@ python setup.py build
 sudo python setup.py install
 cd ..
 
-sudo mkdir -p /usr/local/suricata/bin
-sudo mkdir -p /usr/local/suricata/lib
-sudo mkdir -p /usr/local/suricata/lib
-sudo mkdir -p /usr/local/suricata/include/linux
-sudo mkdir -p /usr/local/suricata/sbin
-sudo mkdir -p /usr/local/suricata/etc/
-sudo mkdir -p /usr/local/suricata/etc/
-sudo mkdir -p /usr/local/suricata/et-luajit-scripts/
-sudo mkdir -p /usr/local/suricata/var/log
-sudo mkdir -p /usr/local/suricata/var/run/suricata/
-sudo mkdir -p /data/etc/
+#sudo mkdir -p /usr/local/suricata/bin
+#sudo mkdir -p /usr/local/suricata/lib
+#sudo mkdir -p /usr/local/suricata/lib
+#sudo mkdir -p /usr/local/suricata/include/linux
+#sudo mkdir -p /usr/local/suricata/sbin
+#sudo mkdir -p /usr/local/suricata/etc/
+#sudo mkdir -p /usr/local/suricata/etc/
+#sudo mkdir -p /usr/local/suricata/et-luajit-scripts/
+#sudo mkdir -p /usr/local/suricata/var/log
+#sudo mkdir -p /usr/local/suricata/var/run/suricata/
+#sudo mkdir -p /data/etc/
 sudo apt-get install build-essential libapr1 libapr1-dev libnspr4-dev libnss3-dev libwww-Perl libcrypt-ssleay-perl python-dev python-scapy python-yaml bison libpcre3-dev bison flex libdumbnet-dev autotools-dev libnet1-dev libpcap-dev libyaml-dev libnetfilter-queue-dev libprelude-dev zlib1g-dev  libz-dev libcap-ng-dev libmagic-dev python-mysqldb lua-zip-dev luarocks cmake openvswitch-switch libaprutil1-dev libaprutil1-dbd-sqlite3 libapreq2-3 libapreq2-dev liblua5.1-0 liblua5.1-0-dev libapr1 libaprutil1 libaprutil1-dev libaprutil1-dbd-sqlite3 libapreq2-3 libapreq2-dev python-sqlalchemy -y 
 
 mkdir lua-zlib
@@ -82,66 +82,66 @@ cd ../..
 
 #wget http://www.openinfosecfoundation.org/download/suricata-2.0.7.tar.gz
 #wget https://raw.githubusercontent.com/wmetcalf/buildcuckoo-trusty/master/suricata.yaml
-tar -xzvf suricata-2.0.7.tar.gz
-cd suricata-2.0.7
-./configure --enable-profiling --prefix=/usr/local/suricata/ --with-libnss-includes=/usr/include/nss --with-libnss-libs=/usr/lib/nss --with-libnspr-includes=/usr/include/nspr --with-libnspr-libraries=/usr/lib/nspr --enable-lua --enable-unix-socket && make -j && sudo make install
-sudo cp ../suricata.yaml /usr/local/suricata/etc/
-sudo cp reference.config /usr/local/suricata/etc/
-sudo cp classification.config /usr/local/suricata/etc/
-cd ..
+#tar -xzvf suricata-2.0.7.tar.gz
+#cd suricata-2.0.7
+#./configure --enable-profiling --prefix=/usr/local/suricata/ --with-libnss-includes=/usr/include/nss --with-libnss-libs=/usr/lib/nss --with-libnspr-includes=/usr/include/nspr --with-libnspr-libraries=/usr/lib/nspr --enable-lua --enable-unix-socket && make -j && sudo make install
+#sudo cp ../suricata.yaml /usr/local/suricata/etc/
+#sudo cp reference.config /usr/local/suricata/etc/
+#sudo cp classification.config /usr/local/suricata/etc/
+#cd ..
 
-echo "alert http any any -> any any (msg:\"FILE store all\"; filestore; flowbits:noalert; sid:44444; rev:1;)" > local.rules
-sudo cp local.rules /usr/local/suricata/etc/
+#echo "alert http any any -> any any (msg:\"FILE store all\"; filestore; flowbits:noalert; sid:44444; rev:1;)" > local.rules
+#sudo cp local.rules /usr/local/suricata/etc/
 #cp rules/files.rules /usr/local/suricata/etc/etpro/
 
-sudo git clone https://github.com/EmergingThreats/et-luajit-scripts /usr/local/suricata/et-luajit-scripts
-sudo cp /usr/local/suricata/et-luajit-scripts/* /usr/local/suricata/etc/
-read -p  "Enter your ETPRO oinkcode if you have one [ENTER]: " oinkcode
-if ["$oinkcode" = ""]; then
- rule_url="https://rules.emergingthreatspro.com/|emerging.rules.tar.gz|open"
-else
- rule_url="https://rules.emergingthreatspro.com/|etpro.rules.tar.gz|$oinkcode"
-fi
+#sudo git clone https://github.com/EmergingThreats/et-luajit-scripts /usr/local/suricata/et-luajit-scripts
+#sudo cp /usr/local/suricata/et-luajit-scripts/* /usr/local/suricata/etc/
+#read -p  "Enter your ETPRO oinkcode if you have one [ENTER]: " oinkcode
+#if ["$oinkcode" = ""]; then
+# rule_url="https://rules.emergingthreatspro.com/|emerging.rules.tar.gz|open"
+#else
+# rule_url="https://rules.emergingthreatspro.com/|etpro.rules.tar.gz|$oinkcode"
+#fi
 
-echo "rule_url=$rule_url
-ignore=local.rules
-temp_path=/tmp
-rule_path=/usr/local/suricata/etc/all.rules
-sid_msg=/usr/local/suricata/etc/sid-msg.map
-sid_changelog=/usr/local/suricata/var/log/etpro_sid_changes.log
-disablesid=/usr/local/suricata/etc/disablesid.conf
-engine=suricata
-suricata_version=2.0.4
-version=0.6.0
-" > pp.config
+#echo "rule_url=$rule_url
+#ignore=local.rules
+#temp_path=/tmp
+#rule_path=/usr/local/suricata/etc/all.rules
+#sid_msg=/usr/local/suricata/etc/sid-msg.map
+#sid_changelog=/usr/local/suricata/var/log/etpro_sid_changes.log
+#disablesid=/usr/local/suricata/etc/disablesid.conf
+#engine=suricata
+#suricata_version=2.0.4
+#version=0.6.0
+#" > pp.config
 
 #wget https://pulledpork.googlecode.com/files/pulledpork-0.6.1.tar.gz
-tar -xzvf pulledpork-0.6.1.tar.gz
-cd pulledpork-0.6.1
-patch -p1 < ../pulledpork-etpro-fix.diff
-sudo cp -f pulledpork.pl /usr/local/bin/
-echo "#!/bin/sh
-/usr/local/bin/pulledpork.pl -c /usr/local/suricata/etc/pp.config
-cd /usr/local/suricata/et-luajit-scripts/ && git pull
-" > ruleupdates.sh
-chmod +x ruleupdates.sh
-echo "pcre:SURICATA (STMP|IP|TCP|ICMP|HTTP|STREAM)" >> etc/disablesid.conf 
-echo "pcre:GPL NETBIOS" >> etc/disablesid.conf
-sudo cp ruleupdates.sh /usr/local/bin/
-sudo cp ../pp.config /usr/local/suricata/etc/
-sudo cp etc/modifysid.conf /usr/local/suricata/etc/
-sudo cp etc/enablesid.conf /usr/local/suricata/etc/
-sudo cp etc/disablesid.conf /usr/local/suricata/etc/
-cd ..
-ruleupdates.sh
+#tar -xzvf pulledpork-0.6.1.tar.gz
+#cd pulledpork-0.6.1
+#patch -p1 < ../pulledpork-etpro-fix.diff
+#sudo cp -f pulledpork.pl /usr/local/bin/
+#echo "#!/bin/sh
+#/usr/local/bin/pulledpork.pl -c /usr/local/suricata/etc/pp.config
+#cd /usr/local/suricata/et-luajit-scripts/ && git pull
+#" > ruleupdates.sh
+#chmod +x ruleupdates.sh
+#echo "pcre:SURICATA (STMP|IP|TCP|ICMP|HTTP|STREAM)" >> etc/disablesid.conf 
+#echo "pcre:GPL NETBIOS" >> etc/disablesid.conf
+#sudo cp ruleupdates.sh /usr/local/bin/
+#sudo cp ../pp.config /usr/local/suricata/etc/
+#sudo cp etc/modifysid.conf /usr/local/suricata/etc/
+#sudo cp etc/enablesid.conf /usr/local/suricata/etc/
+#sudo cp etc/disablesid.conf /usr/local/suricata/etc/
+#cd ..
+#ruleupdates.sh
 
-tar -xzvf v0.11.3.tar.gz
-cd moloch-0.11.3 
-patch -p1 < ../moloch-fixes.diff 
-sudo ./easybutton-singlehost.sh
-cd ..
-sudo pkill -f "/data/moloch/bin/node viewer.js"
-sudo pkill -f "/data/moloch/elasticsearch-0"
+#tar -xzvf v0.11.3.tar.gz
+#cd moloch-0.11.3 
+#patch -p1 < ../moloch-fixes.diff 
+#sudo ./easybutton-singlehost.sh
+#cd ..
+#sudo pkill -f "/data/moloch/bin/node viewer.js"
+#sudo pkill -f "/data/moloch/elasticsearch-0"
 
 
 #sudo git clone https://github.com/EmergingThreats/cuckoo-1.1.git /data/cuckoo
@@ -151,15 +151,15 @@ cd cuckoo/utils
 cd ../..
 sudo mv cuckoo /data/cuckoo
 
-rm suricata-2.0.7 -Rf
-rm pulledpork-0.6.1 -Rf
-rm lua-zlib -Rf
-rm ltn12ce -Rf
+#rm suricata-2.0.7 -Rf
+#rm pulledpork-0.6.1 -Rf
+#rm lua-zlib -Rf
+#rm ltn12ce -Rf
 rm yara-3.3.0 -Rf
 sudo rm volatility-2.4 -Rf
 rm pydeep -Rf
-sudo rm moloch-0.11.3 -Rf
-rm pp.config
+#sudo rm moloch-0.11.3 -Rf
+#rm pp.config
 sudo rm luazip-1.2.4-1.rockspec
 sudo rm luazip-1.2.4-1 -Rf
 sudo rm pefile-1.2.10-139 -Rf
@@ -193,7 +193,7 @@ sudo ip route add 192.168.1.0/24 dev lan0hp0
 chmod +x services/*
 sudo cp services/* /etc/init.d/
 sudo update-rc.d iptables defaults
-sudo update-rc.d suricata defaults
+#sudo update-rc.d suricata defaults
 
 echo "service /etc/init.d/openvswitch-switch restart
 for tap in \`seq 0 4\`; do
@@ -214,7 +214,7 @@ sudo ip addr add 192.168.1.1 dev lan0hp0
 sudo ip link set lan0hp0 up
 sudo ip route add 192.168.1.0/24 dev lan0hp0
 
-/etc/init.d/moloch start
+#/etc/init.d/moloch start
 /etc/init.d/cuckoo start
 exit 0" | sudo tee /etc/rc.local
 
@@ -239,6 +239,6 @@ sudo virsh net-destroy default
 sudo virsh net-undefine default
 sudo service libvirtd restart
 
-echo "#!/bin/sh
-su malre -c \"/usr/local/bin/ruleupdates.sh\" && /etc/init.d/suricata restart" | sudo tee /etc/cron.daily/ruleupdates
-sudo chmod +x /etc/cron.daily/ruleupdates
+#echo "#!/bin/sh
+#su malre -c \"/usr/local/bin/ruleupdates.sh\" && /etc/init.d/suricata restart" | sudo tee /etc/cron.daily/ruleupdates
+#sudo chmod +x /etc/cron.daily/ruleupdates
