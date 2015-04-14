@@ -53,7 +53,7 @@ sudo mkdir -p /usr/local/suricata/et-luajit-scripts/
 sudo mkdir -p /usr/local/suricata/var/log
 sudo mkdir -p /usr/local/suricata/var/run/suricata/
 sudo mkdir -p /data/etc/
-sudo apt-get install build-essential libapr1 libapr1-dev libnspr4-dev libnss3-dev libwww-Perl libcrypt-ssleay-perl python-dev python-scapy python-yaml bison libpcre3-dev bison flex libdumbnet-dev autotools-dev libnet1-dev libpcap-dev libyaml-dev libnetfilter-queue-dev libprelude-dev zlib1g-dev  libz-dev libcap-ng-dev libmagic-dev python-mysqldb lua-zip-dev luarocks cmake openvswitch-switch libaprutil1-dev libaprutil1-dbd-sqlite3 libapreq2-3 libapreq2-dev liblua5.1-0 liblua5.1-0-dev libapr1 libaprutil1 libaprutil1-dev libaprutil1-dbd-sqlite3 libapreq2-3 libapreq2-dev xrdp python-sqlalchemy -y 
+sudo apt-get install build-essential libapr1 libapr1-dev libnspr4-dev libnss3-dev libwww-Perl libcrypt-ssleay-perl python-dev python-scapy python-yaml bison libpcre3-dev bison flex libdumbnet-dev autotools-dev libnet1-dev libpcap-dev libyaml-dev libnetfilter-queue-dev libprelude-dev zlib1g-dev  libz-dev libcap-ng-dev libmagic-dev python-mysqldb lua-zip-dev luarocks cmake openvswitch-switch libaprutil1-dev libaprutil1-dbd-sqlite3 libapreq2-3 libapreq2-dev liblua5.1-0 liblua5.1-0-dev libapr1 libaprutil1 libaprutil1-dev libaprutil1-dbd-sqlite3 libapreq2-3 libapreq2-dev python-sqlalchemy -y 
 
 mkdir lua-zlib
 cd lua-zlib
@@ -231,13 +231,14 @@ wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | s
 sudo apt-get update
 sudo apt-get install virtualbox-4.3 -y
 
-echo xfce4-session > ~/.xsession
-sudo service xrdp restart
+#echo xfce4-session > ~/.xsession
+#sudo service xrdp restart
+wget http://download.virtualbox.org/virtualbox/4.3.26/Oracle_VM_VirtualBox_Extension_Pack-4.3.26-98988.vbox-extpack
 
 sudo virsh net-destroy default
 sudo virsh net-undefine default
 sudo service libvirtd restart
 
 echo "#!/bin/sh
-su cuckoo -c \"/usr/local/bin/ruleupdates.sh\" && /etc/init.d/suricata restart" | sudo tee /etc/cron.daily/ruleupdates
+su malre -c \"/usr/local/bin/ruleupdates.sh\" && /etc/init.d/suricata restart" | sudo tee /etc/cron.daily/ruleupdates
 sudo chmod +x /etc/cron.daily/ruleupdates
